@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="#F6EEF1"
     android:padding="24dp"
-    tools:context=".SignUpActivity">
+    tools:context=".ui.auth.SignUpActivity">
 
 
     <TextView
@@ -101,7 +101,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btnSignUp"
         android:layout_width="0dp"
         android:layout_height="60dp"

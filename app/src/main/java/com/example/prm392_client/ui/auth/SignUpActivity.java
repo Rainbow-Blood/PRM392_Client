@@ -1,4 +1,4 @@
-package com.example.prm392_client;
+package com.example.prm392_client.ui.auth;
 
 import android.app.Activity;
 

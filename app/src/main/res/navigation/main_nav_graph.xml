@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/messagesFragment">
+    <fragment
+        android:id="@+id/messagesFragment"
+        android:name="com.example.prm392_client.ui.messages.MessagesFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_messages" />
+    <fragment
+        android:id="@+id/contactsFragment"
+        android:name="com.example.prm392_client.ui.contacts.ContactsFragment"
+        android:label="Contact"
+        tools:layout="@layout/fragment_contacts" />
+    <fragment
+        android:id="@+id/postsFragment"
+        android:name="com.example.prm392_client.ui.posts.PostsFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_posts" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.prm392_client.ui.settings.SettingsFragment"
+        android:label="Setting"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/accountsFragment"
+        android:name="com.example.prm392_client.ui.account.AccountsFragment"
+        android:label="Me"
+        tools:layout="@layout/fragment_accounts" />
+</navigation>
