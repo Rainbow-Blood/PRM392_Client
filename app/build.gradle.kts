@@ -50,6 +50,8 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     // https://mvnrepository.com/artifact/com.microsoft.signalr/signalr
     implementation("com.microsoft.signalr:signalr:8.0.21")
+    // https://mvnrepository.com/artifact/androidx.swiperefreshlayout/swiperefreshlayout
+    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.1.0")
     // https://mvnrepository.com/artifact/org.jetbrains.kotlinx/kotlinx-coroutines-android
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("com.google.android.material:material:1.12.0")

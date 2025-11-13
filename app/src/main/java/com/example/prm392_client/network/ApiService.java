@@ -23,11 +23,5 @@ public interface ApiService {
     @POST("api/auth/reset-password")
     Call<GenericResponse> resetPassword(@Body LoginRequest resetPasswordRequest);
 
-    @GET("api/Post/GetAllPosts")
-    Call<List<Post>> getAllPosts();
-
-    @POST("api/Post/CreatePost")
-    Call<Post> createPost(@Body Post post);
-
 
 }

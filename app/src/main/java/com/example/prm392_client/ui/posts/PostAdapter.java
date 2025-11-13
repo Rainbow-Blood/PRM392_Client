@@ -1,8 +1,11 @@
 package com.example.prm392_client.ui.posts;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +37,14 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
         Post post = posts.get(position);
         holder.tvUsername.setText(post.getOwnerID());
-        holder.tvCreatedDate.setText(post.getCreatedAt());
+        holder.tvCreatedDate.setText(DateHelper.formatCreatedDate(post.getCreatedAt()));
         holder.tvContent.setText(post.getContent());
+        holder.btnComment.setOnClickListener(v -> {
+            Bundle args = new Bundle();
+            args.putString("postId", post.getId()); // đảm bảo Post có getId()
+            NavController navController = Navigation.findNavController(v);
+            navController.navigate(R.id.postDetailFragment, args);
+        });
     }
 
     @Override
