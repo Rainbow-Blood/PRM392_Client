@@ -8,7 +8,14 @@
         android:id="@+id/messagesFragment"
         android:name="com.example.prm392_client.ui.messages.MessagesFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_messages" />
+        tools:layout="@layout/fragment_messages">
+
+        <!-- ADD THIS ONE LINE ONLY -->
+        <action
+            android:id="@+id/action_messagesFragment_to_chatFragment"
+            app:destination="@id/chatFragment" />
+
+    </fragment>
     <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.prm392_client.ui.contacts.ContactsFragment"
@@ -29,4 +36,12 @@
         android:name="com.example.prm392_client.ui.account.AccountsFragment"
         android:label="Me"
         tools:layout="@layout/fragment_accounts" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.prm392_client.ui.messages.ChatFragment"
+        android:label="Chat">
+        <argument
+            android:name="conversation"
+            app:argType="com.example.prm392_client.ui.messages.models.Conversation" />
+    </fragment>
 </navigation>
