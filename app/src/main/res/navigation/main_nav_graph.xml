@@ -23,10 +23,27 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.prm392_client.ui.settings.SettingsFragment"
         android:label="Setting"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_accountAndSecurityFragment"
+            app:destination="@id/accountAndSecurityFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountsFragment"
         android:name="com.example.prm392_client.ui.account.AccountsFragment"
         android:label="Me"
         tools:layout="@layout/fragment_accounts" />
+    <fragment
+        android:id="@+id/accountAndSecurityFragment"
+        android:name="com.example.prm392_client.ui.settings.account.AccountSecurityFragment"
+        android:label="Account and Security"
+        tools:layout="@layout/fragment_account_and_security" />
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.example.prm392_client.ui.settings.privacy.PrivacyFragment"
+        android:label="Privacy"
+        tools:layout="@layout/fragment_privacy" />
 </navigation>
