@@ -24,11 +24,40 @@ public class InvitationRepository {
                 Log.println(WARN,"Connect status", "Sucessfull");
                 return response.body();
             }
+            return null;
         }
         catch (IOException e) {
             Log.e("Connect status", "Error: " + e.getMessage(), e);
             throw e;
         }
-        return null;
+    }
+
+    public List<Invitation> getReceivedRequest(String memberId){
+        try{
+            retrofit2.Response<List<Invitation>> response =
+                    api.getReceivedInvitations(memberId).execute();
+            if(response.isSuccessful() && response.body()!= null){
+                Log.println(WARN,"Connect status", "Sucessfull");
+                return response.body();
+            }
+            return null;
+        } catch (IOException e) {
+            Log.e("Connect status", "Error: " + e.getMessage(), e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getMemberInfor(String memberId){
+        try{
+            retrofit2.Response<List<Invitation>> response =
+                    api.getMemberInfor(memberId).execute();
+            if(response.isSuccessful() && response.body()!= null){
+                Log.println(WARN,"Connect status", "Sucessfull");
+                return response.body().toString();
+            }
+            return null;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

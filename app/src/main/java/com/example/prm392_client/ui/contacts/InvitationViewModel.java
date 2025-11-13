@@ -1,17 +1,25 @@
 package com.example.prm392_client.ui.contacts;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
 import com.example.prm392_client.model.contact.Invitation;
+import com.example.prm392_client.ui.contacts.InvitationRepository;
 
-import java.io.IOException;
 import java.util.List;
+// ... các import khác
 
 public class InvitationViewModel extends ViewModel {
     private final InvitationRepository repository;
-    public InvitationViewModel() {
-        // Khởi tạo Repository
-        this.repository = new InvitationRepository();
+
+    private final MutableLiveData<List<Invitation>> _sentInvitations = new MutableLiveData<>();
+    public LiveData<List<Invitation>> sentInvitations = _sentInvitations;
+
+    private final MutableLiveData<String> _memberInfor = new MutableLiveData<>();
+    public LiveData<String> memberInfor = _memberInfor;
+
+    public InvitationViewModel(InvitationRepository repository) {
+        this.repository = repository;
     }
 
     public void loadSentInvitations(String memberId) {
@@ -19,13 +27,24 @@ public class InvitationViewModel extends ViewModel {
             try {
                 List<Invitation> invitations = repository.getSentInvitations(memberId);
 
-                if (invitations != null) {
-                    System.out.println("Tải thành công " + invitations.size() + " lời mời.");
-                } else {
-                    System.out.println("Lỗi tải lời mời.");
-                }
-            } catch (IOException e) {
-                System.err.println("Lỗi mạng: " + e.getMessage());
+                // Sử dụng postValue để cập nhật LiveData từ luồng nền
+                _sentInvitations.postValue(invitations);
+
+            } catch (Exception e) {
+                // Gửi null hoặc list rỗng khi có lỗi
+                _sentInvitations.postValue(null);
+            }
+        }).start();
+    }
+
+    // Tương tự cho hàm loadMemberInfor
+    public void loadMemberInfor(String memberId){
+        new Thread(() -> {
+            try {
+                String name = repository.getMemberInfor(memberId);
+                _memberInfor.postValue(name);
+            } catch (Exception e) {
+                _memberInfor.postValue(null);
             }
         }).start();
     }
