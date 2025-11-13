@@ -12,9 +12,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.NavDestination;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -64,46 +61,11 @@ public class AccountSecurityFragment extends Fragment {
         initViews(view);
         setupUserProfile();
         setupAccountInfoList();
-        setupNavigationListener();
         
         // Fetch user data from API
         fetchUserData();
     }
 
-    private NavController navController;
-
-    /**
-     * Setup navigation listener to handle bottom navigation clicks
-     */
-    private void setupNavigationListener() {
-        View view = getView();
-        if (view != null) {
-            try {
-                navController = Navigation.findNavController(view);
-                
-                // Listen for destination changes
-                navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
-                    // If navigating to settingsFragment while we're still on this fragment, pop back
-                    if (destination.getId() == R.id.settingsFragment) {
-                        NavDestination currentDest = controller.getCurrentDestination();
-                        if (currentDest != null && 
-                            currentDest.getId() == R.id.accountAndSecurityFragment) {
-                            // Use post to ensure this runs after navigation
-                            view.post(() -> {
-                                try {
-                                    controller.popBackStack(R.id.settingsFragment, false);
-                                } catch (Exception e) {
-                                    // Ignore
-                                }
-                            });
-                        }
-                    }
-                });
-            } catch (Exception e) {
-                // NavController not found, ignore
-            }
-        }
-    }
 
     private void initViews(View view) {
         tvAvatar = view.findViewById(R.id.tv_avatar);

@@ -203,38 +203,11 @@ public class SettingsFragment extends Fragment {
         ));
 
         // Setup adapter
-        settingsAdapter = new SettingsAdapter(settingItems, item -> {
-            // Handle setting item click
-            handleSettingItemClick(item);
-        });
+        settingsAdapter = new SettingsAdapter(settingItems);
 
         // Setup RecyclerView
         rvSettings.setLayoutManager(new LinearLayoutManager(getContext()));
         rvSettings.setAdapter(settingsAdapter);
-    }
-
-    /**
-     * Handle setting item click
-     */
-    private void handleSettingItemClick(SettingItem item) {
-        String type = item.getType();
-        View view = getView();
-        if (view == null) return;
-        
-        switch (type) {
-            case "account_security":
-                // Navigate to Account and Security page
-                Navigation.findNavController(view).navigate(R.id.action_settingsFragment_to_accountAndSecurityFragment);
-                break;
-            case "privacy":
-                // Navigate to Privacy page
-                Navigation.findNavController(view).navigate(R.id.action_settingsFragment_to_privacyFragment);
-                break;
-            case "app_info":
-                // TODO: Navigate to App Information page
-                Toast.makeText(getContext(), "App Information clicked", Toast.LENGTH_SHORT).show();
-                break;
-        }
     }
 
     /**

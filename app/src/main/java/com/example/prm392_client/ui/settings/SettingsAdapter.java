@@ -31,6 +31,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.Settin
         this.listener = listener;
     }
 
+    public SettingsAdapter(List<SettingItem> settingItems) {
+        this(settingItems, null);
+    }
+
     @NonNull
     @Override
     public SettingViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
