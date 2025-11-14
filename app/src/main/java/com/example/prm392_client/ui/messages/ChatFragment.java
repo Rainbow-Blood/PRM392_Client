@@ -24,7 +24,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private Conversation conversation;
     private MessageAdapter adapter;
-    private final String currentMemberId = "6914b4d60a6237d6c93a4c17";
+    private final String cmId = "6916b0f22f22c63d5bc25ec8";
     private final SignalRHelper signalR = SignalRHelper.get();
 
     @Override
@@ -55,10 +55,10 @@ public class ChatFragment extends Fragment {
     }
 
     private void setupUI() {
-        binding.toolbar.setTitle(conversation.getOtherMemberName(currentMemberId));
+        binding.toolbar.setTitle(conversation.getOtherMemberName(cmId));
         binding.toolbar.setNavigationOnClickListener(v -> NavHostFragment.findNavController(this).navigateUp());
 
-        adapter = new MessageAdapter(currentMemberId);
+        adapter = new MessageAdapter(cmId);
         binding.recyclerMessages.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerMessages.setAdapter(adapter);
 
@@ -97,7 +97,7 @@ public class ChatFragment extends Fragment {
 
         Message msg = new Message();
         msg.Content = content;
-        msg.OwnerID = currentMemberId;
+        msg.OwnerID = cmId;
         msg.ConversationID = conversation.Id;
 
         binding.edtMessage.setText("");

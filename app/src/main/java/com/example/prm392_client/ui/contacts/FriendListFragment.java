@@ -1,5 +1,7 @@
 package com.example.prm392_client.ui.contacts;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,7 @@ public class FriendListFragment extends Fragment {
     private RecyclerView recyclerView;
     private FriendAdapter friendAdapter;
 
-    private final String currentUserId = "6914b4d60a6237d6c93a4c1d";
+    private final String token = getToken();
 
 
     public FriendListFragment() {
@@ -40,7 +42,10 @@ public class FriendListFragment extends Fragment {
                 new InvitationViewModelFactory(repository))
                 .get(InvitationViewModel.class);
     }
-
+    private String getToken() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        return "Bearer " + sharedPreferences.getString("USER_TOKEN", "");
+    }
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
@@ -51,18 +56,15 @@ public class FriendListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 2. Ánh xạ View và Thiết lập RecyclerView
-        // Thay R.id.recyclerView_friends bằng ID thực tế của bạn trong fragment_friend_list.xml
         recyclerView = view.findViewById(R.id.rv_friend_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // 3. Khởi tạo Adapter và gán vào RecyclerView
         friendAdapter = new FriendAdapter(new ArrayList<>());
         recyclerView.setAdapter(friendAdapter);
 
         observeFriendsList();
 
-        invitationViewModel.loadFriendList(currentUserId);
+        invitationViewModel.loadFriendList(token);
     }
 
     private void observeFriendsList() {

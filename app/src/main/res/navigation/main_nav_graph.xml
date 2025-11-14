@@ -63,4 +63,14 @@
         android:name="com.example.prm392_client.ui.settings.privacy.PrivacyFragment"
         android:label="Privacy"
         tools:layout="@layout/fragment_privacy" />
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.prm392_client.ui.posts.CreatePostFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_create_post" />
+    <fragment
+        android:id="@+id/postDetailFragment"
+        android:name="com.example.prm392_client.ui.posts.PostDetailFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_post_detail" />
 </navigation>

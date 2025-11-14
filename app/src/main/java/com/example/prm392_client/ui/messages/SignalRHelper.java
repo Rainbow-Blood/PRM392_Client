@@ -16,9 +16,8 @@ public class SignalRHelper {
     }
 
     private SignalRHelper() {
-        hub = HubConnectionBuilder.create("http://10.0.2.2:8000/chatHub").build();
+        hub = HubConnectionBuilder.create(MessagesFragment.CoreResource.BASE_URL + "chatHub").build();
     }
-
     public static SignalRHelper get() {
         if (instance == null) instance = new SignalRHelper();
         return instance;

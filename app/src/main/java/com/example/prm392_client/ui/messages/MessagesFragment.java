@@ -20,7 +20,7 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private FragmentMessagesBinding binding;
     private ConversationAdapter adapter;
-    private static final String MEMBER_ID = "6914b4d60a6237d6c93a4c17";
+    private static final String MEMBER_ID = "6916b0f22f22c63d5bc25ec8";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -56,5 +56,9 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
+    }
+    public class CoreResource {
+        public static final String BASE_URL = "https://1f06lcq1-8000.asse.devtunnels.ms/";
+        public static final String BASE_URL_NON_HTTPS = "http://10.0.2.2:8000/api/";
     }
 }

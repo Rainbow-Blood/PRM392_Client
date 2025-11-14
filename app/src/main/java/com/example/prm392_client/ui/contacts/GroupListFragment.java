@@ -1,5 +1,7 @@
 package com.example.prm392_client.ui.contacts;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,12 +28,15 @@ public class GroupListFragment extends Fragment {
     private RecyclerView recyclerView;
     private GroupAdapter groupAdapter;
 
-    private final String currentUserId = "6914b4d60a6237d6c93a4c1d";
+    private final String token = getToken();
 
     public GroupListFragment() {
     }
 
-
+    private String getToken() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        return "Bearer " + sharedPreferences.getString("USER_TOKEN", "");
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +51,6 @@ public class GroupListFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        // Inflate layout (fragment_group_list)
         return inflater.inflate(R.layout.fragment_group_list, container, false);
     }
 
@@ -60,7 +64,7 @@ public class GroupListFragment extends Fragment {
         groupAdapter = new GroupAdapter(new ArrayList<>());
         recyclerView.setAdapter(groupAdapter);
         observeGroupList();
-        invitationViewModel.loadGroupList(currentUserId);
+        invitationViewModel.loadGroupList(token);
     }
 
     private void observeGroupList() {

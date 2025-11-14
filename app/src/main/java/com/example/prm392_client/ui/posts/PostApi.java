@@ -5,6 +5,7 @@ import com.example.prm392_client.model.post.CommentCreateRequest;
 import com.example.prm392_client.model.post.Post;
 import com.example.prm392_client.model.post.PostCreateRequest;
 import com.example.prm392_client.model.post.Member;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface PostApi {
 
 
     @POST("api/Post/CreatePost")
-    Call<Post> createPost(@Body PostCreateRequest post);
+    Call<Post> createPost(@Header("Authorization") String token, @Body PostCreateRequest post);
 
     @GET("api/Post/GetPostByPostId")
     Call<Post> getPostById(@Query("id") String id);

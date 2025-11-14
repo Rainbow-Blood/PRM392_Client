@@ -12,23 +12,24 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ContactAPI {
-    @GET("api/Invitation/GetSentInvitationByMemberId/{memberId}/sent")
-    Call<List<Invitation>> getSentInvitations(@Path("memberId") String memberId);
+    @GET("api/Invitation/GetSentInvitationByMemberId/sent")
+    Call<List<Invitation>> getSentInvitations(@Header("Authorization") String token);
 
-    @GET("api/Invitation/GetReceivedInvitationByMemberId/{memberId}/receive")
-    Call<List<Invitation>> getReceivedInvitations(@Path("memberId") String memberId);
+    @GET("api/Invitation/GetReceivedInvitationByMemberId/receive")
+    Call<List<Invitation>> getReceivedInvitations(@Header("Authorization") String token);
 
-    @GET("api/Invitation/GetFriendsByMemberId/friends/{memberId}")
-    Call<List<MemberDTO>> getFriendList(@Path("memberId") String memberId);
+    @GET("api/Invitation/GetFriendsByMemberId/friends")
+    Call<List<MemberDTO>> getFriendList(@Header("Authorization") String token);
 
     // GET /api/Invitation/groups/{memberId}
-    @GET("api/Invitation/GetGroupListByMemberId/groups/{memberId}")
-    Call<List<GroupDTO>> getGroupList(@Path("memberId") String memberId);
+    @GET("api/Invitation/GetGroupListByMemberId/groups")
+    Call<List<GroupDTO>> getGroupList(@Header("Authorization") String token);
     @POST("api/Invitation/SendInvitation")
     Call<Invitation> sendInvitation(
             @Body InvitationDTO request

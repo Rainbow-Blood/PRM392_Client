@@ -18,13 +18,13 @@ import java.util.Locale;
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.VH> {
 
     private final List<Conversation> list = new ArrayList<>();
-    private final String currentMemberId;
+    private final String cmId;
     private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
     private static final int[] COLORS = {0xFFE91E63, 0xFF9C27B0, 0xFF673AB7, 0xFF3F51B5,
             0xFF2196F3, 0xFF00BCD4, 0xFF009688, 0xFF4CAF50, 0xFFCDDC39, 0xFFFF9800, 0xFFFF5722, 0xFF795548};
 
-    public ConversationAdapter(String currentMemberId) {
-        this.currentMemberId = currentMemberId;
+    public ConversationAdapter(String cmId) {
+        this.cmId = cmId;
     }
 
     public void setData(List<Conversation> data) {
@@ -66,7 +66,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
         }
 
         void bind(Conversation c) {
-            String name = c.getOtherMemberName(currentMemberId);
+            String name = c.getOtherMemberName(cmId);
             String letter = name.isEmpty() ? "?" : name.substring(0, 1).toUpperCase();
 
             tvAvatar.setText(letter);

@@ -1,5 +1,7 @@
 package com.example.prm392_client.ui.posts;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -22,11 +24,20 @@ import androidx.fragment.app.Fragment;
 import com.example.prm392_client.R;
 import com.example.prm392_client.model.post.Post;
 import com.example.prm392_client.model.post.PostCreateRequest;
+import com.google.gson.JsonObject;
 
 public class CreatePostFragment extends Fragment {
     private EditText etPostContent;
     private Spinner spVisibility;
     private Button btnPost, btnBack;
+
+
+    private String getToken() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        return "Bearer " + sharedPreferences.getString("USER_TOKEN", "");
+    }
+
+
 
 
     // Optional: để biết quay về đâu (posts list / user detail)
@@ -89,16 +100,14 @@ public class CreatePostFragment extends Fragment {
 
     private void createPost(String content, boolean visibility) {
         // TODO: Sau này lấy userId từ SharedPreferences sau khi login
-        // SharedPreferences prefs = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
-        // String userId = prefs.getString("userId", "");
+//         SharedPreferences prefs = requireContext().getSharedPreferences("auth", Context.MODE_PRIVATE);
+//         String userId = prefs.getString("userId", "");
 
-        // Hiện tại fix cứng userId = "1"
-        String userId = "1";
+
 
         PostApi api = RetrofitClient.getApi();
-        PostCreateRequest request = new PostCreateRequest(userId, content, visibility);
-
-        api.createPost(request).enqueue(new Callback<Post>() {
+        PostCreateRequest request = new PostCreateRequest(content, visibility);
+        api.createPost(getToken(), request).enqueue(new Callback<Post>() {
             @Override
             public void onResponse(@NonNull Call<Post> call, @NonNull Response<Post> response) {
                 if (response.isSuccessful() && response.body() != null) {
