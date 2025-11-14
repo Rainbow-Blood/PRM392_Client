@@ -1,5 +1,6 @@
 package com.example.prm392_client.network;
 
+import com.example.prm392_client.model.post.Post;
 import com.example.prm392_client.model.request.LoginRequest;
 import com.example.prm392_client.model.request.RegisterRequest;
 import com.example.prm392_client.model.request.ResetPasswordRequest;
@@ -10,6 +11,8 @@ import com.example.prm392_client.model.response.LoginResponse;
 import com.google.gson.JsonObject;
 
 import java.util.Map;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

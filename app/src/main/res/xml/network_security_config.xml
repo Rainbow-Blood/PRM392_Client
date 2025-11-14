@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
+        <!-- Thay bằng domain hoặc IP của server -->
         <domain includeSubdomains="true">10.0.2.2</domain>
+        <trust-anchors>
+            <!-- Cho phép chứng chỉ hệ thống -->
+            <certificates src="system" />
+            <!-- Cho phép chứng chỉ người dùng (self-signed) -->
+            <certificates src="user" />
+        </trust-anchors>
     </domain-config>
 </network-security-config>
