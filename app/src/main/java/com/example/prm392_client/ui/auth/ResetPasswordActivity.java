@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.prm392_client.model.request.LoginRequest;
+import com.example.prm392_client.model.request.ResetPasswordRequest;
 import com.example.prm392_client.ui.auth.LoginActivity;
 import com.example.prm392_client.R;
 import com.example.prm392_client.model.response.GenericResponse;
@@ -29,12 +30,15 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private Button btnResetPassword;
     private String userEmail;
 
+    private String verifyCode;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_reset_password);
 
         userEmail = getIntent().getStringExtra("USER_EMAIL");
+        verifyCode = getIntent().getStringExtra("VERIFICATION_CODE");
         if (userEmail == null || userEmail.isEmpty()) {
             Toast.makeText(this, "Có lỗi xảy ra, không tìm thấy email", Toast.LENGTH_SHORT).show();
             finish();
@@ -62,7 +66,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
             return;
         }
 
-        LoginRequest request = new LoginRequest(userEmail, newPassword);
+        ResetPasswordRequest request = new ResetPasswordRequest(userEmail, verifyCode, newPassword, confirmPassword);
 
         RetrofitClient.getApiService().resetPassword(request).enqueue(new Callback<GenericResponse>() {
             @Override
