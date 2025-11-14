@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignUpActivity extends Activity {
+public class SignUpActivity extends AppCompatActivity {
     private EditText etFullName;
     private EditText etEmail;
     private EditText etPassword;
@@ -36,36 +36,30 @@ public class SignUpActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_register);
 
-        // Ánh xạ View
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         etFullName = findViewById(R.id.etFullName);
         tvLoginLink = findViewById(R.id.tvLoginLink);
-        btnSignUp = findViewById(R.id.btnSignUp); // <-- SỬA: Phải findViewById cho button
+        btnSignUp = findViewById(R.id.btnSignUp); 
 
-        // Sự kiện click cho nút Đăng ký
         btnSignUp.setOnClickListener(view -> {
             handleRegister();
         });
 
-        // Sự kiện click cho link Đăng nhập
         tvLoginLink.setOnClickListener(view -> {
-            // Quay về màn hình Login
             Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
             startActivity(intent);
-            finish(); // Đóng màn hình hiện tại
+            finish(); 
         });
     }
 
     private void handleRegister() {
-        // Lấy và làm sạch dữ liệu đầu vào
         String email = etEmail.getText().toString().trim();
         String fullName = etFullName.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        // --- SỬA: Kiểm tra đầu vào đầy đủ hơn ---
         if (email.isEmpty() || fullName.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
             Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
             return;
@@ -76,7 +70,6 @@ public class SignUpActivity extends Activity {
             return;
         }
 
-        // --- SỬA: Dùng đúng Model và gọi đúng API ---
         RegisterRequest registerRequest = new RegisterRequest(email, fullName, password);
 
         ApiService apiService = RetrofitClient.getApiService();
@@ -86,12 +79,10 @@ public class SignUpActivity extends Activity {
                 if (response.isSuccessful()) {
                     Toast.makeText(SignUpActivity.this, "Đăng ký thành công! Vui lòng đăng nhập.", Toast.LENGTH_LONG).show();
 
-                    // Chuyển về màn hình đăng nhập
                     Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                     startActivity(intent);
-                    finish(); // Đóng màn hình đăng ký
+                    finish();
                 } else {
-                    // Xử lý lỗi từ server (ví dụ: email đã tồn tại)
                     Toast.makeText(SignUpActivity.this, "Đăng ký thất bại. Email có thể đã tồn tại.", Toast.LENGTH_SHORT).show();
                 }
             }
