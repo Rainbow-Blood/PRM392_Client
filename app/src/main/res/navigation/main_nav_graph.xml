@@ -17,6 +17,11 @@
 
     </fragment>
     <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.prm392_client.ui.messages.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.prm392_client.ui.contacts.ContactsFragment"
         android:label="Contact"
@@ -25,23 +30,37 @@
         android:id="@+id/postsFragment"
         android:name="com.example.prm392_client.ui.posts.PostsFragment"
         android:label="Post"
-        tools:layout="@layout/fragment_posts" />
+        tools:layout="@layout/fragment_posts" >
+        <action
+            android:id="@+id/action_postsFragment_to_createPostFragment"
+            app:destination="@id/createPostFragment" />
+    </fragment>
+
     <fragment
         android:id="@+id/settingsFragment"
         android:name="com.example.prm392_client.ui.settings.SettingsFragment"
         android:label="Setting"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action
+            android:id="@+id/action_settingsFragment_to_accountAndSecurityFragment"
+            app:destination="@id/accountAndSecurityFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_privacyFragment"
+            app:destination="@id/privacyFragment" />
+    </fragment>
     <fragment
         android:id="@+id/accountsFragment"
         android:name="com.example.prm392_client.ui.account.AccountsFragment"
         android:label="Me"
         tools:layout="@layout/fragment_accounts" />
     <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.prm392_client.ui.messages.ChatFragment"
-        android:label="Chat">
-        <argument
-            android:name="conversation"
-            app:argType="com.example.prm392_client.ui.messages.models.Conversation" />
-    </fragment>
+        android:id="@+id/accountAndSecurityFragment"
+        android:name="com.example.prm392_client.ui.settings.account.AccountSecurityFragment"
+        android:label="Account and Security"
+        tools:layout="@layout/fragment_account_and_security" />
+    <fragment
+        android:id="@+id/privacyFragment"
+        android:name="com.example.prm392_client.ui.settings.privacy.PrivacyFragment"
+        android:label="Privacy"
+        tools:layout="@layout/fragment_privacy" />
 </navigation>
