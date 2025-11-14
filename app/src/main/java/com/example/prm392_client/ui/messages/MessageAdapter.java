@@ -66,5 +66,5 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.VH> {
                 tvTime.setText(sdf.format(m.CreatedAt));
             }
         }
-    }
+    }\
 }

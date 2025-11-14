@@ -62,9 +62,8 @@ public class SignalRHelper {
         hub.send("SendMessage", msg);
     }
 
-    // CHỈ DÙNG KHI APP THOÁT HOÀN TOÀN
     public void disconnect() {
         hub.stop();
-        isListenerRegistered = false; // Cho phép đăng ký lại nếu cần
+        isListenerRegistered = false;
     }
 }
