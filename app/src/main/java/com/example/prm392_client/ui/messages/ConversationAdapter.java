@@ -1,60 +1,49 @@
 package com.example.prm392_client.ui.messages;
 
-import android.annotation.SuppressLint;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.example.prm392_client.R;
-
+import com.example.prm392_client.ui.messages.models.Conversation;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapter.VH> {
 
-    private List<Conversation> list = new ArrayList<>();
-    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private final List<Conversation> list = new ArrayList<>();
     private final String currentMemberId;
-
-    private static final int[] COLORS = {
-            0xFFE91E63, 0xFF9C27B0, 0xFF673AB7, 0xFF3F51B5,
-            0xFF2196F3, 0xFF00BCD4, 0xFF009688, 0xFF4CAF50,
-            0xFFCDDC39, 0xFFFF9800, 0xFFFF5722, 0xFF795548
-    };
+    private final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+    private static final int[] COLORS = {0xFFE91E63, 0xFF9C27B0, 0xFF673AB7, 0xFF3F51B5,
+            0xFF2196F3, 0xFF00BCD4, 0xFF009688, 0xFF4CAF50, 0xFFCDDC39, 0xFFFF9800, 0xFFFF5722, 0xFF795548};
 
     public ConversationAdapter(String currentMemberId) {
         this.currentMemberId = currentMemberId;
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     public void setData(List<Conversation> data) {
         list.clear();
         if (data != null) list.addAll(data);
         notifyDataSetChanged();
     }
 
-    @NonNull
-    @Override
+    @NonNull @Override
     public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_conversation, parent, false);
-        return new VH(v);
+        return new VH(LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_conversation, parent, false));
     }
 
-    @Override
-    public void onBindViewHolder(@NonNull VH holder, int position) {
+    @Override public void onBindViewHolder(@NonNull VH holder, int position) {
         holder.bind(list.get(position));
     }
 
-    @Override
-    public int getItemCount() { return list.size(); }
+    @Override public int getItemCount() { return list.size(); }
 
     class VH extends RecyclerView.ViewHolder {
         TextView tvAvatar, tvName, tvType, tvTime;
@@ -67,46 +56,24 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationAdapte
             tvTime = v.findViewById(R.id.tvTime);
 
             v.setOnClickListener(view -> {
-                int position = getAdapterPosition();
-                if (position != RecyclerView.NO_POSITION) {
-                    Conversation c = list.get(position);
-                    android.util.Log.d("CHAT_CLICK", "Conversation ID: " + c.Id);
-                }
+                int pos = getAdapterPosition();
+                if (pos == RecyclerView.NO_POSITION) return;
+                Bundle b = new Bundle();
+                b.putParcelable("conversation", list.get(pos));
+                Navigation.findNavController(view)
+                        .navigate(R.id.action_messagesFragment_to_chatFragment, b);
             });
         }
 
         void bind(Conversation c) {
-            String displayName = getDisplayName(c);
-            String firstLetter = displayName.isEmpty() ? "?" : displayName.substring(0, 1).toUpperCase();
+            String name = c.getOtherMemberName(currentMemberId);
+            String letter = name.isEmpty() ? "?" : name.substring(0, 1).toUpperCase();
 
-            // Avatar: chữ cái + màu
-            tvAvatar.setText(firstLetter);
-            int color = COLORS[Math.abs(c.Id.hashCode()) % COLORS.length];
-            tvAvatar.setBackgroundColor(color);
-
-            // Tên
-            tvName.setText(displayName);
+            tvAvatar.setText(letter);
+            tvAvatar.setBackgroundColor(COLORS[Math.abs(c.Id.hashCode()) % COLORS.length]);
+            tvName.setText(name);
             tvType.setText(c.Type);
-
-            // Thời gian
             tvTime.setText(c.CreatedAt != null ? sdf.format(c.CreatedAt) : "");
-        }
-
-        private String getDisplayName(Conversation c) {
-            if ("Group".equalsIgnoreCase(c.Type)) {
-                return c.Name != null && !c.Name.isEmpty() ? c.Name : "Group Chat";
-            }
-
-            // Friend: tìm người kia
-            if (c.GroupMembers != null) {
-                for (Map.Entry<String, MemberInfo> e : c.GroupMembers.entrySet()) {
-                    if (!e.getKey().equals(currentMemberId)) {
-                        return e.getValue().Name != null && !e.getValue().Name.isEmpty()
-                                ? e.getValue().Name : "Unknown";
-                    }
-                }
-            }
-            return "Chat";
         }
     }
 }

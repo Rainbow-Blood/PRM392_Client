@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import com.example.prm392_client.databinding.FragmentMessagesBinding;
+import com.example.prm392_client.ui.messages.models.Conversation;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -19,7 +20,7 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private FragmentMessagesBinding binding;
     private ConversationAdapter adapter;
-    private static final String MemberId = "6914b4d60a6237d6c93a4c0e";
+    private static final String MEMBER_ID = "6914b4d60a6237d6c93a4c17";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,43 +30,29 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        adapter = new ConversationAdapter(MemberId);
+        adapter = new ConversationAdapter(MEMBER_ID);
         binding.recyclerConversations.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerConversations.setAdapter(adapter);
-
         binding.swipeRefresh.setOnRefreshListener(this);
-        binding.swipeRefresh.setColorSchemeResources(
-                android.R.color.holo_blue_bright,
-                android.R.color.holo_green_light,
-                android.R.color.holo_orange_light,
-                android.R.color.holo_red_light);
     }
 
-    @Override
-    public void onResume() {
+    @Override public void onResume() {
         super.onResume();
-        loadConversations(); // TẢI MỚI MỖI LẦN MỞ
+        load();
     }
 
-    @Override
-    public void onRefresh() {
-        loadConversations();
-    }
+    @Override public void onRefresh() { load(); }
 
-    private void loadConversations() {
+    private void load() {
         binding.swipeRefresh.setRefreshing(true);
-
-        RetrofitClient.getApi().getConversations(MemberId).enqueue(new Callback<List<Conversation>>() {
-            @Override
-            public void onResponse(Call<List<Conversation>> call, Response<List<Conversation>> response) {
+        RetrofitClient.getApi().getConversations(MEMBER_ID).enqueue(new Callback<List<Conversation>>() {
+            @Override public void onResponse(Call<List<Conversation>> call, Response<List<Conversation>> response) {
                 binding.swipeRefresh.setRefreshing(false);
                 if (response.isSuccessful() && response.body() != null) {
                     adapter.setData(response.body());
                 }
             }
-
-            @Override
-            public void onFailure(Call<List<Conversation>> call, Throwable t) {
+            @Override public void onFailure(Call<List<Conversation>> call, Throwable t) {
                 binding.swipeRefresh.setRefreshing(false);
             }
         });
