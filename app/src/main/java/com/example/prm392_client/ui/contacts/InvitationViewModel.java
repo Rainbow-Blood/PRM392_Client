@@ -3,6 +3,8 @@ package com.example.prm392_client.ui.contacts;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.example.prm392_client.model.contact.GroupDTO;
 import com.example.prm392_client.model.contact.Invitation;
 import com.example.prm392_client.model.contact.InvitationDTO;
 import com.example.prm392_client.model.contact.MemberDTO;
@@ -30,6 +32,8 @@ public class InvitationViewModel extends ViewModel {
         this.repository = repository;
     }
 
+    private final MutableLiveData<List<GroupDTO>> _groupList = new MutableLiveData<>();
+    public LiveData<List<GroupDTO>> groupList = _groupList; // <-- Trường mà Fragment observe
     public void loadSentInvitations(String memberId) {
         new Thread(() -> {
             try {
@@ -88,4 +92,16 @@ public class InvitationViewModel extends ViewModel {
             }
         }).start();
     }
+
+    public void loadGroupList(String memberId){
+        new Thread(() -> {
+            try {
+                List<GroupDTO> groups = repository.getGroupList(memberId);
+                _groupList.postValue(groups);
+            } catch (Exception e) {
+                _groupList.postValue(null);
+            }
+        }).start();
+    }
+
 }

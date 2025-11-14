@@ -4,6 +4,7 @@ import static android.util.Log.WARN;
 
 import android.util.Log;
 
+import com.example.prm392_client.model.contact.GroupDTO;
 import com.example.prm392_client.model.contact.Invitation;
 import com.example.prm392_client.model.contact.InvitationDTO;
 import com.example.prm392_client.model.contact.MemberDTO;
@@ -69,9 +70,8 @@ public class InvitationRepository {
         }
     }
 
-    public List<MemberDTO> getFriendList(String memberId){ // Đổi String -> List<MemberDTO>
+    public List<MemberDTO> getFriendList(String memberId){
         try{
-            // Sửa kiểu gọi API
             retrofit2.Response<List<MemberDTO>> response =
                     api.getFriendList(memberId).execute();
 
@@ -81,6 +81,22 @@ public class InvitationRepository {
             }
             return null;
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<GroupDTO> getGroupList(String memberId){
+        try{
+            retrofit2.Response<List<GroupDTO>> response =
+                    api.getGroupList(memberId).execute();
+
+            if(response.isSuccessful() && response.body()!= null){
+                Log.println(WARN,"Connect status", "group Sucessfull");
+                return response.body();
+            }
+            return null;
+        } catch (IOException e) {
+            Log.e("Connect status", "Error in getGroupList: " + e.getMessage(), e);
             throw new RuntimeException(e);
         }
     }

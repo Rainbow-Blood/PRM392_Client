@@ -1,5 +1,6 @@
 package com.example.prm392_client.ui.contacts;
 
+import com.example.prm392_client.model.contact.GroupDTO;
 import com.example.prm392_client.model.contact.Invitation;
 import com.example.prm392_client.model.contact.InvitationDTO;
 import com.example.prm392_client.model.contact.MemberDTO;
@@ -24,6 +25,10 @@ public interface ContactAPI {
 
     @GET("api/Invitation/GetFriendsByMemberId/friends/{memberId}")
     Call<List<MemberDTO>> getFriendList(@Path("memberId") String memberId);
+
+    // GET /api/Invitation/groups/{memberId}
+    @GET("api/Invitation/GetGroupListByMemberId/groups/{memberId}")
+    Call<List<GroupDTO>> getGroupList(@Path("memberId") String memberId);
     @POST("api/Invitation/SendInvitation")
     Call<Invitation> sendInvitation(
             @Body InvitationDTO request
