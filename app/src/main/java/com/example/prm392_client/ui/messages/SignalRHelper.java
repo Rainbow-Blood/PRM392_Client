@@ -16,7 +16,7 @@ public class SignalRHelper {
     }
 
     private SignalRHelper() {
-        hub = HubConnectionBuilder.create("http://10.0.2.2:8000/chatHub").build();
+        hub = HubConnectionBuilder.create("https://1f06lcq1-8000.asse.devtunnels.ms/chatHub").build();
     }
 
     public static SignalRHelper get() {

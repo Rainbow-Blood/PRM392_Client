@@ -20,7 +20,7 @@ public class MessagesFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     private FragmentMessagesBinding binding;
     private ConversationAdapter adapter;
-    private static final String MEMBER_ID = "6914b4d60a6237d6c93a4c17";
+    private static final String MEMBER_ID = "6916b0f22f22c63d5bc25ec8";
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

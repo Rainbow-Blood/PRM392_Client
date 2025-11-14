@@ -24,7 +24,7 @@ public class ChatFragment extends Fragment {
     private FragmentChatBinding binding;
     private Conversation conversation;
     private MessageAdapter adapter;
-    private final String currentMemberId = "6914b4d60a6237d6c93a4c17";
+    private final String currentMemberId = "6916b0f22f22c63d5bc25ec8";
     private final SignalRHelper signalR = SignalRHelper.get();
 
     @Override
