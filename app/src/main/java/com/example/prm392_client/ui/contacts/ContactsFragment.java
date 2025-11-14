@@ -14,12 +14,9 @@ import android.view.ViewGroup;
 
 import com.example.prm392_client.R;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ContactsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class ContactsFragment extends Fragment {
     TabLayout tablayout;
     ViewPager2 viewPager2;
@@ -39,23 +36,24 @@ public class ContactsFragment extends Fragment {
         viewPager2 = view.findViewById(R.id.contact_view_pager);
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager2.setAdapter(viewPagerAdapter);
-        tablayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener(){
 
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                viewPager2.setCurrentItem(tab.getPosition());
+        // THÊM: Sử dụng TabLayoutMediator để đồng bộ hóa và gán tiêu đề
+        new TabLayoutMediator(tablayout, viewPager2, (tab, position) -> {
+            switch (position) {
+                case 0:
+                    tab.setText("Friends");
+                    break;
+                case 1:
+                    tab.setText("Groups");
+                    break;
+                case 2:
+                    tab.setText("Requests");
+                    break;
             }
+        }).attach();
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
+        // BỎ đi listener cũ nếu dùng TabLayoutMediator (hoặc dùng nó để ghi đè)
+        // viewPager2.setCurrentItem(tab.getPosition()); sẽ được xử lý tự động.
     }
 
     @Override

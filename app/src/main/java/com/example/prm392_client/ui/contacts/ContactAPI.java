@@ -22,7 +22,7 @@ public interface ContactAPI {
     Call<List<Invitation>> getReceivedInvitations(@Path("memberId") String memberId);
 
     @GET("api/Invitation/GetReceivedInvitationByMemberId/{memberId}/infor")
-    Call<List<Invitation>> getMemberInfor(@Path("memberId") String memberId);
+    Call<String> getMemberInfor(@Path("memberId") String memberId);
     @POST("api/Invitation/SendInvitation")
     Call<Invitation> sendInvitation(
             @Body InvitationDTO request

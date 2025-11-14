@@ -5,14 +5,23 @@ import com.google.gson.annotations.SerializedName;
 import java.time.LocalDateTime;
 
 public class Invitation {
+    @SerializedName("id")
     private String Id;
+    @SerializedName("toID")
     private String ToID;
+    @SerializedName("fromID")
     private String FromID;
+    @SerializedName("content")
     private String Content;
+    @SerializedName("status")
     private String Status;
-    private LocalDateTime CreatedAt;
 
-    public Invitation(String id, String toID, String fromID, String content, String status, LocalDateTime createdAt) {
+    @SerializedName("createdAt")
+    private String CreatedAt;
+
+    public Invitation() {
+    }
+    public Invitation(String id, String toID, String fromID, String content, String status, String createdAt) {
         Id = id;
         ToID = toID;
         FromID = fromID;
@@ -61,11 +70,11 @@ public class Invitation {
         Status = status;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public String getCreatedAt() {
         return CreatedAt;
     }
 
-    public void setCreatedAt(LocalDateTime createdAt) {
+    public void setCreatedAt(String createdAt) {
         CreatedAt = createdAt;
     }
 }
