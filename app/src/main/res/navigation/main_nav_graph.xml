@@ -17,6 +17,11 @@
 
     </fragment>
     <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.prm392_client.ui.messages.ChatFragment"
+        android:label="Chat"
+        tools:layout="@layout/fragment_chat" />
+    <fragment
         android:id="@+id/contactsFragment"
         android:name="com.example.prm392_client.ui.contacts.ContactsFragment"
         android:label="Contact"

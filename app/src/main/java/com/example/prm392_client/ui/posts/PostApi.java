@@ -4,6 +4,7 @@ import com.example.prm392_client.model.post.Comment;
 import com.example.prm392_client.model.post.CommentCreateRequest;
 import com.example.prm392_client.model.post.Post;
 import com.example.prm392_client.model.post.PostCreateRequest;
+import com.example.prm392_client.model.post.Member;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ import retrofit2.http.*;
 
 public interface PostApi {
 
+
+    @GET("api/Post/GetUserByUserId")
+    Call<Member> getUserById(@Query("id") String id);
 
     @GET("api/Post/GetAllPosts")
     Call<List<Post>> getAllPosts();
@@ -29,16 +33,16 @@ public interface PostApi {
     @GET("api/Post/GetAllPostByUserId")
     Call<List<Post>> getPostsByUserId(@Query("ownerId") String ownerId);
 
-    @GET("Post/{id}")
-    Call<Post> getPostDetail(@Path("id") String id);
 
-    @GET("Comment/Post/{postId}")
+    @GET("api/Comment/post/{postId}")
     Call<List<Comment>> getComments(@Path("postId") String postId);
 
-    @POST("Comment")
+    @POST("api/Comment")
     Call<Comment> createComment(@Body CommentCreateRequest request);
 
+    @PUT("api/Comment/{id}")
+    Call<Void> updateComment(@Path("id") String id, @Body CommentCreateRequest request);
 
-
-
+    @DELETE("api/Comment/{id}")
+    Call<Void> deleteComment(@Path("id") String id);
 }

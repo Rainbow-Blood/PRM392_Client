@@ -3,13 +3,11 @@ package com.example.prm392_client.ui.posts;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +16,7 @@ import android.widget.Toast;
 
 import com.example.prm392_client.R;
 import com.example.prm392_client.model.post.Post;
+import com.example.prm392_client.model.post.Member;
 
 import java.util.List;
 
@@ -58,22 +57,40 @@ public class PostsFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    Log.e("PostsFragment", "Sổ lượng posts trong list: "+ response.body().size());
-                    adapter = new PostAdapter(response.body());
+                    List<Post> posts = response.body();
+
+                    // Với mỗi post, gọi API lấy tên user theo OwnerID
+                    for (Post post : posts) {
+                        api.getUserById(post.getOwnerID()).enqueue(new Callback<Member>() {
+                            @Override
+                            public void onResponse(Call<Member> call, Response<Member> resp) {
+                                if (resp.isSuccessful() && resp.body() != null) {
+                                    post.setOwnerName(resp.body().getName()); // thêm field ownerName vào Post.java
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                            @Override
+                            public void onFailure(Call<Member> call, Throwable t) {
+                                // giữ nguyên OwnerID nếu lỗi
+                            }
+                        });
+                    }
+
+                    adapter = new PostAdapter(posts);
                     rvPosts.setAdapter(adapter);
                 } else {
-                    Log.e("PostsFragment", "Response not successful: " + response.code());
                     Toast.makeText(getContext(), "Không tải được dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Post>> call, Throwable t) {
-                Log.e("PostsFragment", "Error: " + t.getMessage());
                 Toast.makeText(getContext(), "Lỗi kết nối server", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
 
 
 }

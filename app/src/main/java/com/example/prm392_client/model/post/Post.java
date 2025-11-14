@@ -9,6 +9,7 @@ public class Post {
     private boolean visibility;
     private String createdAt;
     private String status;
+    private String ownerName;
 
     // Getter và Setter
     public String getId() { return id; }
@@ -28,4 +29,6 @@ public class Post {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public String getOwnerName() { return ownerName; }
+    public void setOwnerName(String ownerName) { this.ownerName = ownerName; }
 }

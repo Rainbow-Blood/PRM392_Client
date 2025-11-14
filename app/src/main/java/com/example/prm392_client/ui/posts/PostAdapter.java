@@ -36,7 +36,9 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostViewHolder
     @Override
     public void onBindViewHolder(@NonNull PostAdapter.PostViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.tvUsername.setText(post.getOwnerID());
+        holder.tvUsername.setText(
+                post.getOwnerName() != null ? post.getOwnerName() : post.getOwnerID()
+        );
         holder.tvCreatedDate.setText(DateHelper.formatCreatedDate(post.getCreatedAt()));
         holder.tvContent.setText(post.getContent());
         holder.btnComment.setOnClickListener(v -> {
