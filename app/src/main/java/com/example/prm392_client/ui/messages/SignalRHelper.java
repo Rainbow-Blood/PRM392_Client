@@ -18,8 +18,10 @@ public class SignalRHelper {
     private SignalRHelper() {
         hub = HubConnectionBuilder.create(MessagesFragment.CoreResource.BASE_URL + "chatHub").build();
     }
+
     public static SignalRHelper get() {
-        if (instance == null) instance = new SignalRHelper();
+        if (instance == null)
+            instance = new SignalRHelper();
         return instance;
     }
 
@@ -48,9 +50,17 @@ public class SignalRHelper {
         this.listener = l;
     }
 
-    public void join(String room) { hub.send("JoinRoom", room); }
-    public void leave(String room) { hub.send("LeaveRoom", room); }
-    public void send(Message msg) { hub.send("SendMessage", msg); }
+    public void join(String room) {
+        hub.send("JoinRoom", room);
+    }
+
+    public void leave(String room) {
+        hub.send("LeaveRoom", room);
+    }
+
+    public void send(Message msg) {
+        hub.send("SendMessage", msg);
+    }
 
     // CHỈ DÙNG KHI APP THOÁT HOÀN TOÀN
     public void disconnect() {
