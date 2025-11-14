@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 import com.example.prm392_client.model.contact.Invitation;
 import com.example.prm392_client.model.contact.InvitationDTO;
+import com.example.prm392_client.model.contact.MemberDTO;
 import com.example.prm392_client.ui.contacts.InvitationRepository;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class InvitationViewModel extends ViewModel {
 
     private final MutableLiveData<String> _memberInfor = new MutableLiveData<>();
     public LiveData<String> memberInfor = _memberInfor;
+
+    private final MutableLiveData<List<MemberDTO>> _friendsList = new MutableLiveData<>();
+    public LiveData<List<MemberDTO>> friendsList = _friendsList;
 
     public InvitationViewModel(InvitationRepository repository) {
         this.repository = repository;
@@ -73,13 +77,14 @@ public class InvitationViewModel extends ViewModel {
         }).start();
     }
 
-    public void loadMemberInfor(String memberId){
+    public void loadFriendList(String memberId){
         new Thread(() -> {
             try {
-                String name = repository.getMemberInfor(memberId);
-                _memberInfor.postValue(name);
+                List<MemberDTO> friends = repository.getFriendList(memberId);
+
+                _friendsList.postValue(friends);
             } catch (Exception e) {
-                _memberInfor.postValue(null);
+                _friendsList.postValue(null);
             }
         }).start();
     }

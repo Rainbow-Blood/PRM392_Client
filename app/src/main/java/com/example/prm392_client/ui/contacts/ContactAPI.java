@@ -2,6 +2,7 @@ package com.example.prm392_client.ui.contacts;
 
 import com.example.prm392_client.model.contact.Invitation;
 import com.example.prm392_client.model.contact.InvitationDTO;
+import com.example.prm392_client.model.contact.MemberDTO;
 import com.example.prm392_client.model.response.GenericResponse;
 
 import java.util.List;
@@ -21,8 +22,8 @@ public interface ContactAPI {
     @GET("api/Invitation/GetReceivedInvitationByMemberId/{memberId}/receive")
     Call<List<Invitation>> getReceivedInvitations(@Path("memberId") String memberId);
 
-    @GET("api/Invitation/GetReceivedInvitationByMemberId/{memberId}/infor")
-    Call<String> getMemberInfor(@Path("memberId") String memberId);
+    @GET("api/Invitation/GetFriendsByMemberId/friends/{memberId}")
+    Call<List<MemberDTO>> getFriendList(@Path("memberId") String memberId);
     @POST("api/Invitation/SendInvitation")
     Call<Invitation> sendInvitation(
             @Body InvitationDTO request

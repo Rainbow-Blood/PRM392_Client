@@ -47,8 +47,6 @@ public class FriendRequestFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 2. Ánh xạ View và Thiết lập RecyclerView
-        // Thay R.id.recyclerView_requests bằng ID thực tế của bạn
         recyclerView = view.findViewById(R.id.rv_friend_request);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

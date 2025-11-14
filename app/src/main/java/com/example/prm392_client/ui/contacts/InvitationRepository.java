@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.example.prm392_client.model.contact.Invitation;
 import com.example.prm392_client.model.contact.InvitationDTO;
+import com.example.prm392_client.model.contact.MemberDTO;
 import com.example.prm392_client.model.response.GenericResponse;
 
 import java.io.IOException;
@@ -39,8 +40,7 @@ public class InvitationRepository {
             retrofit2.Response<List<Invitation>> response =
                     api.getReceivedInvitations(memberId).execute();
             if(response.isSuccessful() && response.body()!= null){
-                Log.println(WARN,"Connect status", "Sucessfull");
-                Log.println(WARN,"Connect status", response.body().toString());
+                Log.println(WARN,"Connect status", "request Sucessfull");
                 return response.body();
             }
             return null;
@@ -69,12 +69,14 @@ public class InvitationRepository {
         }
     }
 
-    public String getMemberInfor(String memberId){
+    public List<MemberDTO> getFriendList(String memberId){ // Đổi String -> List<MemberDTO>
         try{
-            retrofit2.Response<String> response =
-                    api.getMemberInfor(memberId).execute();
+            // Sửa kiểu gọi API
+            retrofit2.Response<List<MemberDTO>> response =
+                    api.getFriendList(memberId).execute();
+
             if(response.isSuccessful() && response.body()!= null){
-                Log.println(WARN,"Connect status", "Sucessfull");
+                Log.println(WARN,"Connect status", "friend Sucessfull");
                 return response.body();
             }
             return null;

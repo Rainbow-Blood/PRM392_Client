@@ -37,7 +37,6 @@ public class ContactsFragment extends Fragment {
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager2.setAdapter(viewPagerAdapter);
 
-        // THÊM: Sử dụng TabLayoutMediator để đồng bộ hóa và gán tiêu đề
         new TabLayoutMediator(tablayout, viewPager2, (tab, position) -> {
             switch (position) {
                 case 0:
@@ -51,15 +50,11 @@ public class ContactsFragment extends Fragment {
                     break;
             }
         }).attach();
-
-        // BỎ đi listener cũ nếu dùng TabLayoutMediator (hoặc dùng nó để ghi đè)
-        // viewPager2.setCurrentItem(tab.getPosition()); sẽ được xử lý tự động.
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_contacts, container, false);
         return view;
     }
