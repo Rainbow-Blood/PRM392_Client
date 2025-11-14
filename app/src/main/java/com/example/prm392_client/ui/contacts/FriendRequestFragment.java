@@ -1,5 +1,7 @@
 package com.example.prm392_client.ui.contacts;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,7 +27,7 @@ public class FriendRequestFragment extends Fragment {
     private InvitationViewModel invitationViewModel;
     private RecyclerView recyclerView;
     private InvitationAdapter invitationAdapter;
-    private final String currentUserId = "6914b4d60a6237d6c93a4c1d";
+    private final String token = getToken();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,10 +38,14 @@ public class FriendRequestFragment extends Fragment {
                 .get(InvitationViewModel.class);
     }
 
+    private String getToken() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences("AppPrefs", Context.MODE_PRIVATE);
+        return "Bearer " + sharedPreferences.getString("USER_TOKEN", "");
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_friend_request, container, false);
     }
 
@@ -53,19 +59,13 @@ public class FriendRequestFragment extends Fragment {
         invitationAdapter = new InvitationAdapter(new ArrayList<>(), invitationViewModel);
         recyclerView.setAdapter(invitationAdapter);
 
-        // 4. Quan sát LiveData (Bind dữ liệu)
         observeReceivedInvitations();
-
-        // 5. Kích hoạt tải dữ liệu
-        invitationViewModel.loadReceivedInvitation(currentUserId);
+        invitationViewModel.loadReceivedInvitation(token);
     }
 
     private void observeReceivedInvitations() {
-        // Quan sát LiveData chứa danh sách lời mời đã nhận
         invitationViewModel.receivedInvitations.observe(getViewLifecycleOwner(), invitations -> {
-            // LiveData sẽ kích hoạt khi dữ liệu được tải hoặc cập nhật
             if (invitations != null && !invitations.isEmpty()) {
-                // Cập nhật Adapter khi dữ liệu thành công
                 invitationAdapter.updateData(invitations);
             } else {
                 invitationAdapter.updateData(Collections.emptyList());

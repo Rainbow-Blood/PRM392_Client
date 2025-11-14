@@ -46,10 +46,10 @@ public class InvitationViewModel extends ViewModel {
         }).start();
     }
 
-    public void loadReceivedInvitation(String memberId){
+    public void loadReceivedInvitation(String token){
         new Thread(() -> {
             try {
-                List<Invitation> invitations = repository.getReceivedRequest(memberId);
+                List<Invitation> invitations = repository.getReceivedRequest(token);
                 _receivedInvitations.postValue(invitations);
             } catch (Exception e) {
                 _receivedInvitations.postValue(null);
@@ -81,10 +81,10 @@ public class InvitationViewModel extends ViewModel {
         }).start();
     }
 
-    public void loadFriendList(String memberId){
+    public void loadFriendList(String token){
         new Thread(() -> {
             try {
-                List<MemberDTO> friends = repository.getFriendList(memberId);
+                List<MemberDTO> friends = repository.getFriendList(token);
 
                 _friendsList.postValue(friends);
             } catch (Exception e) {
@@ -93,10 +93,10 @@ public class InvitationViewModel extends ViewModel {
         }).start();
     }
 
-    public void loadGroupList(String memberId){
+    public void loadGroupList(String token){
         new Thread(() -> {
             try {
-                List<GroupDTO> groups = repository.getGroupList(memberId);
+                List<GroupDTO> groups = repository.getGroupList(token);
                 _groupList.postValue(groups);
             } catch (Exception e) {
                 _groupList.postValue(null);

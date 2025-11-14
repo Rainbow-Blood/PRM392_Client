@@ -1,7 +1,10 @@
 package com.example.prm392_client.ui.contacts;
 
+import static android.app.PendingIntent.getActivity;
 import static android.util.Log.WARN;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.prm392_client.model.contact.GroupDTO;
@@ -16,14 +19,15 @@ import java.util.List;
 public class InvitationRepository {
     private final ContactAPI api;
 
+
     public InvitationRepository(){
         this.api = RetrofitClient.getContactAPI();
     }
 
-    public List<Invitation> getSentInvitations(String memberId) throws IOException{
+    public List<Invitation> getSentInvitations(String token) throws IOException{
         try{
             retrofit2.Response<List<Invitation>> response =
-                    api.getSentInvitations(memberId).execute();
+                    api.getSentInvitations(token).execute();
             if(response.isSuccessful() && response.body()!= null){
                 Log.println(WARN,"Connect status", "Sucessfull");
                 return response.body();
@@ -36,10 +40,10 @@ public class InvitationRepository {
         }
     }
 
-    public List<Invitation> getReceivedRequest(String memberId){
+    public List<Invitation> getReceivedRequest(String token){
         try{
             retrofit2.Response<List<Invitation>> response =
-                    api.getReceivedInvitations(memberId).execute();
+                    api.getReceivedInvitations(token).execute();
             if(response.isSuccessful() && response.body()!= null){
                 Log.println(WARN,"Connect status", "request Sucessfull");
                 return response.body();
@@ -70,10 +74,10 @@ public class InvitationRepository {
         }
     }
 
-    public List<MemberDTO> getFriendList(String memberId){
+    public List<MemberDTO> getFriendList(String token){
         try{
             retrofit2.Response<List<MemberDTO>> response =
-                    api.getFriendList(memberId).execute();
+                    api.getFriendList(token).execute();
 
             if(response.isSuccessful() && response.body()!= null){
                 Log.println(WARN,"Connect status", "friend Sucessfull");
@@ -85,10 +89,10 @@ public class InvitationRepository {
         }
     }
 
-    public List<GroupDTO> getGroupList(String memberId){
+    public List<GroupDTO> getGroupList(String token){
         try{
             retrofit2.Response<List<GroupDTO>> response =
-                    api.getGroupList(memberId).execute();
+                    api.getGroupList(token).execute();
 
             if(response.isSuccessful() && response.body()!= null){
                 Log.println(WARN,"Connect status", "group Sucessfull");

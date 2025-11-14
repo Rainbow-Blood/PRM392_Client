@@ -36,7 +36,6 @@ public class FriendAdapter extends RecyclerView.Adapter<FriendAdapter.FriendView
         return friendsList.size();
     }
 
-    // Hàm cập nhật dữ liệu (gọi từ Observer)
     public void updateData(List<MemberDTO> newFriends) {
         this.friendsList = newFriends;
         notifyDataSetChanged();
