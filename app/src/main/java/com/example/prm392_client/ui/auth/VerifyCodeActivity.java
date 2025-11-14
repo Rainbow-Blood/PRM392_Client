@@ -30,11 +30,10 @@ public class VerifyCodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.auth_verify_code);
 
-        // Nhận email từ màn hình ForgotPasswordActivity
         userEmail = getIntent().getStringExtra("USER_EMAIL");
         if (userEmail == null || userEmail.isEmpty()) {
             Toast.makeText(this, "Có lỗi xảy ra, không tìm thấy email", Toast.LENGTH_SHORT).show();
-            finish(); // Đóng activity nếu không có email
+            finish();
             return;
         }
 
@@ -63,6 +62,7 @@ public class VerifyCodeActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(VerifyCodeActivity.this, ResetPasswordActivity.class);
                     intent.putExtra("USER_EMAIL", userEmail);
+                    intent.putExtra("VERIFICATION_CODE", code);
                     startActivity(intent);
                     finish();
                 } else {
